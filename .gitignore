@@ -1,0 +1,11 @@
+node_modules
+./packages/auth/node_modules
+./packages/authenticator/node_modules
+./packages/container/node_modules
+./packages/dashboard/node_modules
+./packages/marketing/node_modules
+./packages/menu/node_modules
+./packages/utils/node_modules
+
+dist
+.DS_Store

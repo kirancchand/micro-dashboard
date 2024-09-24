@@ -1,0 +1,27 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .sidebar.collapsed {
+    width: 80px;
+  }
+  
+  .sidebar .nav-link {
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .sidebar .nav-link:hover {
+    background-color: #495057;
+  }
+  
+  .sidebar .btn {
+    margin-bottom: 20px;
+  }
+  
