@@ -1,4 +1,5 @@
 node_modules
+./packages/3d_portfoilo/node_modules
 ./packages/auth/node_modules
 ./packages/authenticator/node_modules
 ./packages/container/node_modules
