@@ -4,11 +4,7 @@ import {
     StylesProvider,
     createGenerateClassName,
   } from '@material-ui/core/styles';
-// import MarketingApp from './components/MarketingApp';
-// import AuthApp from "./components/AuthApp";
 import Progress from "./components/Progress";
-import Header from './components/Header';
-import AuthenticaterHeader from './components/AuthenticaterHeader';
 import {createBrowserHistory} from 'history';
 import { Provider } from 'react-redux';
 import store from '../re-redux/store';
@@ -21,6 +17,7 @@ const AuthLazy = lazy(()=>import ('./components/AuthApp'));
 const DashboardLazy = lazy(()=>import ('./components/DashboardApp'));
 // const AuthenticatorLazy = lazy(()=>import ('./components/AuthenticatorApp'));
 const UtilsLazy = lazy(()=>import ('./components/UtilsApp'));
+const DynamicDashboardLazy = lazy(()=>import ('./components/DynamicDashboardApp'));
 const generateClassName=createGenerateClassName({
     productionPrefix:'co'   ,
 });
@@ -29,23 +26,11 @@ const history=createBrowserHistory();
 export default()=>{
     const [isSignedIn,setIsSignedIn]=useState(false);
     const globalStore = GlobalStore.Get(false);
+    globalStore.RegisterStore('MenuStore', store);
     globalStore.SubscribeToGlobalState("MenuStore", updateMenuState)
-    // globalStore.SubscribeToGlobalState("AuthStore", updateAuthState)
     function updateMenuState(globalState){
-        console.log("container",globalState)
-        history.push(globalState.MenuStore.currentMenu);
+        history.push(globalState.MenuStore.menu.currentMenu);
     }
-
-    // function updateAuthState(globalState){
-    //     console.log("container",globalState)
-    //     if(globalState.AuthStore!=undefined&&globalState.AuthStore.isSignedIn){
-    //         setIsSignedIn(true)
-    //         history.push('/dashboard/home');
-    //     }else{
-    //         setIsSignedIn(false)
-    //         history.push('/');  
-    //     }
-    // }
     useEffect(()=>{
         if(isSignedIn){
             history.push('/dashboard/home');
@@ -55,66 +40,57 @@ export default()=>{
     },[isSignedIn])
 
     const onSelectMenu = (appName) => {
-        console.log("loadMicroApp",appName)
-    //   setSelectedApp(appName);
         history.push(appName);
     };
+
+    const Menu=()=>{
+       return <Grid item md={2}>
+            <Suspense fallback={<div>Loading..</div>}>
+                <MenuLazy onSelectMenu={(ev)=>onSelectMenu(ev)}/>
+            </Suspense>
+        </Grid>
+    }
     return (
-    // <BrowserRouter>
     <Router history={history}>
         <StylesProvider generateClassName={generateClassName}>
               <Provider store={store}>
             <div>
-                {/* <Header onSignOut ={()=>setIsSignedIn(false)} isSignedIn={isSignedIn}/> */}
-                {/* <AuthenticaterHeader onSignOut ={()=>setIsSignedIn(false)} isSignedIn={isSignedIn}/> */}
-                {/* <div onClick={()=>onSelectMenu("/authenticator/signin")}>sign</div> */}
                 <Suspense fallback={<div>Utils Loading..</div>}>
                           <UtilsLazy />
                 </Suspense>
                 <Grid container>
-                    <Grid item md={2}>
-                        <Suspense fallback={<div>Loading..</div>}>
-                            <MenuLazy onSelectMenu={(ev)=>onSelectMenu(ev)}/>
-                        </Suspense>
-                        
-
-                    </Grid>
-                    <Grid item md={10}>
+                    <Grid item md={12}>
                         <Suspense fallback={<Progress/>}>
                             <Switch>
                                 <Route path="/auth"><AuthLazy onSignIn={()=>setIsSignedIn(true)}/></Route>
-                                {/* <Route path="/authenticator"><AuthenticatorLazy onSignIn={()=>setIsSignedIn(true)}/></Route> */}
-                                {/* <Route path="/dashboard">
-                                    {!isSignedIn&&<Redirect to="/" />}
-                                    <DashboardLazy/>
-                                    <MarketingLazy/>
-                                </Route> */}
-                                
                                 <Route path="/dashboard">
-
-
+                                    <Grid container>
+                                        <Menu/>
+                                        <Grid item md={10}>
+                                            <DashboardLazy/>
+                                            {/* <DynamicDashboardLazy/> */}
+                                        </Grid>
+                                    </Grid>
                                     
-                                    <DashboardLazy/>
-                                
-                                
+                                    
                                 </Route>
+                                <Route path="/dynamic">
+                                    <Grid container>
+                                        <Menu/>
+                                        <Grid item md={10}>
+                                            <DynamicDashboardLazy/>
+                                        </Grid>
+                                    </Grid>
+                                </Route>
+
                                 <Route path="/"><MarketingLazy/></Route>
                             </Switch>
                         </Suspense>
                      </Grid>
                 </Grid>
-              
-
-                {/* <Provider store={store}> */}
-                {/* <ReduxApp/> */}
-                {/* </Provider> */}
-                {/* <MarketingApp/>  */}
-
-                {/* <TodoList/> */}
             </div>
              </Provider>
         </StylesProvider>
     </Router>
-    //  </BrowserRouter>
      );
 }

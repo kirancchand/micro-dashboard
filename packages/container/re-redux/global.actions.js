@@ -11,3 +11,11 @@ export const DecrementGlobalCounter = () => {
         payload: null
     }
 }
+
+export const SelectMenuFunc = (val) => {
+    console.log("helo",val)
+    return {
+        type: "SELECTEDMENU",
+        payload: val
+    }
+}

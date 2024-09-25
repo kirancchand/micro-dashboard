@@ -7,7 +7,7 @@ const MenuReducer = (state = initialState, action) =>
 produce(state,draft  => {
     switch(action.type){
         case 'SELECTEDMENU':
-            // draft.currentMenu=action.payload
+            draft.currentMenu=action.payload
             console.log(action)
             break;
     }

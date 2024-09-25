@@ -22,7 +22,8 @@ const devConfig={
                 auth:'auth@http://localhost:3082/remoteEntry.js',
                 dashboard:'dashboard@http://localhost:3083/remoteEntry.js',
                 authenticator:'authenticator@http://localhost:3086/remoteEntry.js',
-                utils:'utils@http://localhost:3087/remoteEntry.js'
+                utils:'utils@http://localhost:3087/remoteEntry.js',
+                dynamicdashboard:'dynamicdashboard@http://localhost:3088/remoteEntry.js',
             },
             shared:packageJson.dependencies
             // ['react','react-dom'],
