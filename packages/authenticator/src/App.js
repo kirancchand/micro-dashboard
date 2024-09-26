@@ -1,9 +1,7 @@
 import React from "react";
-import { Switch, Route, Router } from 'react-router-dom';
-import {
-  StylesProvider,
-  createGenerateClassName,
-} from '@material-ui/core/styles';
+// import { Switch, Route, Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { StylesProvider,createGenerateClassName } from '@mui/styles';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 // import { Provider } from 'react-redux';
@@ -18,10 +16,10 @@ export default({history,onSignIn})=>{
     // }
     return  <StylesProvider generateClassName={generateClassName}>
              <Router history={history}>
-                <Switch>
-                    <Route path="/authenticator/signin"><Signin onSignIn={onSignIn}/></Route>
-                    <Route path="/authenticator/signup"><Signup onSignIn={onSignIn}/></Route>
-                </Switch>
+                <Routes>
+                    <Route path="/authenticator/signin" element={<Signin onSignIn={onSignIn} />} />
+                    <Route path="/authenticator/signup" element={<Signup onSignIn={onSignIn} />} />
+                </Routes>
             </Router>
         </StylesProvider>
 

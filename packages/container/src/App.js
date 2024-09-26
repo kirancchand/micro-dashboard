@@ -10,12 +10,13 @@ import { Provider } from 'react-redux';
 import store from '../re-redux/store';
 import { GlobalStore } from 'redux-micro-frontend';
 import TodoList from '../src/components/TodoList';
+import AuthenticaterHeader from './components/AuthenticaterHeader';
 import Grid from '@material-ui/core/Grid';
 const MenuLazy = lazy(()=>import ('./components/MenuApp'));
 const MarketingLazy = lazy(()=>import ('./components/MarketingApp'));
 const AuthLazy = lazy(()=>import ('./components/AuthApp'));
 const DashboardLazy = lazy(()=>import ('./components/DashboardApp'));
-// const AuthenticatorLazy = lazy(()=>import ('./components/AuthenticatorApp'));
+const AuthenticatorLazy = lazy(()=>import ('./components/AuthenticatorApp'));
 const UtilsLazy = lazy(()=>import ('./components/UtilsApp'));
 const DynamicDashboardLazy = lazy(()=>import ('./components/DynamicDashboardApp'));
 const generateClassName=createGenerateClassName({
@@ -55,6 +56,7 @@ export default()=>{
         <StylesProvider generateClassName={generateClassName}>
               <Provider store={store}>
             <div>
+            <AuthenticaterHeader onSignOut ={()=>setIsSignedIn(false)} isSignedIn={isSignedIn}/>
                 <Suspense fallback={<div>Utils Loading..</div>}>
                           <UtilsLazy />
                 </Suspense>
@@ -63,6 +65,7 @@ export default()=>{
                         <Suspense fallback={<Progress/>}>
                             <Switch>
                                 <Route path="/auth"><AuthLazy onSignIn={()=>setIsSignedIn(true)}/></Route>
+                                <Route path="/authenticator"><AuthenticatorLazy onSignIn={()=>setIsSignedIn(true)}/></Route> 
                                 <Route path="/dashboard">
                                     <Grid container>
                                         <Menu/>

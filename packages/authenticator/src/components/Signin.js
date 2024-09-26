@@ -1,16 +1,17 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { Grid2 } from '@mui/material';
 
 function Copyright() {
   return (
@@ -25,46 +26,35 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  '@global': {
-    a: {
-      textDecoration: 'none',
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
 export default function SignIn({ onSignIn }) {
-  const classes = useStyles();
-
+  const theme = createTheme();
   return (
+    <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <Box
+          sx={{
+            marginTop: theme.spacing(8),
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+                <Avatar sx={{
+                    margin: theme.spacing(1),
+                    backgroundColor: theme.palette.secondary.main,
+                   }}
+                >
+             <LockOutlinedIcon />
+            </Avatar>
         <Typography component="h1" variant="h5">
          Please Sign In
         </Typography>
         <form
           onSubmit={(e) => e.preventDefault()}
-          className={classes.form}
+          sx={{
+            width: '100%',
+            marginTop: theme.spacing(1),
+          }}
           noValidate
         >
           <TextField
@@ -98,21 +88,25 @@ export default function SignIn({ onSignIn }) {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            sx={{
+              margin: theme.spacing(3, 0, 2),
+            }}
             onClick={onSignIn}
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item>
+          <Grid2 container>
+            <Grid2 item="true">
               <Link to="/authenticator/signup">{"Don't have an account? Sign Up"}</Link>
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </form>
-      </div>
+      </Box>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
+    </ThemeProvider>
+
   );
 }
