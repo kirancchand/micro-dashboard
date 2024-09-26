@@ -1,16 +1,18 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { Grid2 as Grid} from '@mui/material';
+
 import { useSelector,useDispatch } from 'react-redux';
 import { login,SelectMenuFunc } from '../../re-redux/actions';
 import { GlobalStore } from 'redux-micro-frontend';
@@ -56,7 +58,8 @@ export default function SignIn({ onSignIn }) {
   const dispatch=useDispatch()
   const globalStore = GlobalStore.Get(false);
   
-  const classes = useStyles();
+  // const classes = useStyles();
+  const theme = createTheme();
   const handleSubmit=(e)=>{
     e.preventDefault()
     let authData={
@@ -70,9 +73,21 @@ export default function SignIn({ onSignIn }) {
 
   }
   return (
+    <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <Box
+          sx={{
+            marginTop: theme.spacing(8),
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+        <Avatar sx={{
+              margin: theme.spacing(1),
+              backgroundColor: theme.palette.secondary.main,
+              }}
+          >
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -80,7 +95,10 @@ export default function SignIn({ onSignIn }) {
         </Typography>
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className={classes.form}
+          sx={{
+            width: '100%',
+            marginTop: theme.spacing(1),
+          }}
           noValidate
         >
           <TextField
@@ -114,22 +132,25 @@ export default function SignIn({ onSignIn }) {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            sx={{
+              margin: theme.spacing(3, 0, 2),
+            }}
             // onClick={onSignIn}
           >
             Sign In
           </Button>
           <Grid container>
-            <Grid item>
+            <Grid item="true">
               <Link to="/auth/signup">{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Box>
       <Box mt={8}>
         <Copyright />
       </Box>
     </Container>
+    </ThemeProvider>
   );
 }
 
