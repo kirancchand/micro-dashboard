@@ -1,12 +1,22 @@
 import React,{useState} from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  AppBar,Button,Toolbar,Grid2 as Grid,createTheme,ThemeProvider,
+  Typography,Link as MaterialLink} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import { GlobalStore } from 'redux-micro-frontend';
 import { SelectMenuFunc,logout } from '../../re-redux/global.actions';
+import { styled } from '@mui/material/styles';
+const StyledAppBar=styled(AppBar)(({theme})=>({
+  borderBottom: `1px solid ${theme.palette.divider}`,
+}))
+
+const StyledToolbar=styled(Toolbar)(({theme})=>({
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+}))
+
+
 const useStyles = makeStyles((theme) => ({
   '@global': {
     ul: {
@@ -17,13 +27,6 @@ const useStyles = makeStyles((theme) => ({
     a: {
       textDecoration: 'none',
     },
-  },
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbar: {
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
   },
   link: {
     margin: theme.spacing(1, 1.5),
@@ -56,9 +59,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header() {
-  const classes = useStyles();
+  // const classes = useStyles();
   const globalStore = GlobalStore.Get(false);
-
+  const theme = createTheme();
   const [authData,setAuthData]=useState(null)
   globalStore.SubscribeToGlobalState("AuthStore", getAuthData)
   function getAuthData(globalState){
@@ -83,13 +86,13 @@ export default function Header() {
 
   return (
     <React.Fragment>
-      <AppBar
+      <ThemeProvider theme={theme}>
+      <StyledAppBar
         position="static"
         color="default"
         elevation={0}
-        className={classes.appBar}
       >
-        <Toolbar className={classes.toolbar}>
+        <StyledToolbar >
           <Typography
             variant="h6"
             color="inherit"
@@ -109,7 +112,10 @@ export default function Header() {
           <Button
             color="primary"
             variant="outlined"
-            className={classes.link}
+            sx={{
+              margin: theme.spacing(1, 1.5),
+            }}
+            // className={classes.link}
             // component={RouterLink}
             // to={authData!==null&&authData.isSignedIn ? '/' : '/auth/signin'}
             onClick={()=>onClick(authData!==null&&authData.isSignedIn ? '/' : '/auth/signin')}
@@ -128,8 +134,9 @@ export default function Header() {
             {authData!==null&&authData.isSignedIn ? 'Logout' : 'Login'}
           </Button> */}
          
-        </Toolbar>
-      </AppBar>
+        </StyledToolbar>
+      </StyledAppBar>
+      </ThemeProvider>
     </React.Fragment>
   );
 }
