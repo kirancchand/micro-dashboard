@@ -1,9 +1,6 @@
 import React,{lazy,useState} from "react";
-import { Switch, Route, Router } from 'react-router-dom';
-import {
-  StylesProvider,
-  createGenerateClassName,
-} from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { StylesProvider,createGenerateClassName } from '@mui/styles';
 import { Provider } from 'react-redux';
 import store from '../re-redux/store';
 import DynamicDashboardHome from "./components/DynamicDashboardHome";
@@ -18,13 +15,12 @@ export default({history})=>{
         <StylesProvider generateClassName={generateClassName}>
           <Provider store={store}>
             Dynamic Dashboard
-          <Router history={history}>
-
-                <Switch>
-                    <Route path="/dynamic/home" component={DynamicDashboardHome}/>
-                    <Route path="/dynamic/page" component={DynamicDashboardPage}/>
-                </Switch>
-            </Router>
+            <Router history={history}>
+                <Routes>
+                    <Route path="/dynamic/home" element={<DynamicDashboardHome/>}/>
+                    <Route path="/dynamic/page" element={<DynamicDashboardPage/>}/>
+                </Routes>
+          </Router>
           </Provider>
         </StylesProvider>
     </div>
