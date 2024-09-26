@@ -1,15 +1,11 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import MaterialLink from '@material-ui/core/Link';
+import {
+  Button,Card,CardActions,CardContent,CardMedia,Grid2 as Grid,
+  Typography,Container,Link as MaterialLink} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
 // import LandingHome from './LandingHome';
 function Copyright() {
   return (
@@ -24,6 +20,40 @@ function Copyright() {
   );
 }
 
+const HeroContent = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(8, 0, 6),
+}));
+
+
+const HeroButtons = styled('div')(({theme})=>({
+  marginTop: theme.spacing(4),
+}))
+
+const CardGrid = styled(Container)(({theme})=>({
+  paddingTop: theme.spacing(8),
+  paddingBottom: theme.spacing(8),
+}))
+
+const StyledCard = styled(Card)(({theme})=>({
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+}))
+
+const StyledCardMedia = styled(CardMedia)(({theme})=>({
+  paddingTop: '56.25%', // 16:9
+}))
+
+const StyledCardContent = styled(CardContent)(({theme})=>({
+  flexGrow: 1,
+}))
+
+const Footer = styled('footer')(({theme})=>({
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(6),
+}))
+
 const useStyles = makeStyles((theme) => ({
   '@global': {
     a: {
@@ -33,44 +63,18 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
 }));
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Album() {
-  const classes = useStyles();
+export default function Landing() {
+  // const classes = useStyles();
 
   return (
     <React.Fragment>
       <main>
         {/* Hero unit */}
-        <div className={classes.heroContent}>
+        <HeroContent>
           {/* <LandingHome></LandingHome> */}
           <Container maxWidth="sm">
             <Typography
@@ -102,16 +106,16 @@ export default function Album() {
               contents, the creator, etc. Make it short and sweet, but not too
               short so folks don&apos;t simply skip over it entirely.
             </Typography>
-            <div className={classes.heroButtons}>
+            <HeroButtons>
               <Grid container spacing={2} justifyContent="center">
-                <Grid item>
+                <Grid item="true">
                   <Link to="/pricing">
                     <Button variant="contained" color="primary">
                       Pricing
                     </Button>
                   </Link>
                 </Grid>
-                <Grid item>
+                <Grid item="true">
                   <Link to="/pricing">
                     <Button variant="outlined" color="primary">
                       Pricing
@@ -119,22 +123,21 @@ export default function Album() {
                   </Link>
                 </Grid>
               </Grid>
-            </div>
+            </HeroButtons>
           </Container>
-        </div>
+        </HeroContent>
     
-        <Container className={classes.cardGrid} maxWidth="md">
+        <CardGrid maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
+              <Grid item="true" key={card} size={{xs:12,sm:6,md:4}}>
+                <StyledCard>
+                  <StyledCardMedia
                     image="https://source.unsplash.com/random"
                     title="Image title"
                   />
-                  <CardContent className={classes.cardContent}>
+                  <StyledCardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                       Heading
                     </Typography>
@@ -142,7 +145,7 @@ export default function Album() {
                       This is a media card. You can use this section to describe
                       the content!
                     </Typography>
-                  </CardContent>
+                  </StyledCardContent>
                   <CardActions>
                     <Button size="small" color="primary">
                       View
@@ -151,14 +154,14 @@ export default function Album() {
                       Edit
                     </Button>
                   </CardActions>
-                </Card>
+                </StyledCard>
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </CardGrid>
       </main>
       {/* Footer */}
-      <footer className={classes.footer}>
+      <Footer>
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
@@ -171,7 +174,7 @@ export default function Album() {
           Something here to give the footer a purpose!
         </Typography>
         <Copyright />
-      </footer>
+      </Footer>
       {/* End footer */}
     </React.Fragment>
   );
