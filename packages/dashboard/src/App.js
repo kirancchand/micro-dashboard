@@ -1,9 +1,6 @@
 import React,{lazy,useState} from "react";
-import { Switch, Route, Router } from 'react-router-dom';
-import {
-  StylesProvider,
-  createGenerateClassName,
-} from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { StylesProvider,createGenerateClassName } from '@mui/styles';
 // const HomeLazy = lazy(()=>import ('./components/Home'));
 import Home from "./components/Home";
 import Counter from "./components/counter";
@@ -18,7 +15,7 @@ import { createStore } from 'redux';
 import DashboardHome from "./components/DashboardHome";
 import DashboardPage from "./components/DashboardPage";
 const generateClassName=createGenerateClassName({
-    productionPrefix:'ha'   ,
+    productionPrefix:'da'   ,
 });
 
 export default({history})=>{
@@ -63,11 +60,11 @@ function updateState(globalState){
         <StylesProvider generateClassName={generateClassName}>
           <Provider store={store}>
           <Router history={history}>
-                <Switch>
-                    <Route path="/dashboard/home" component={DashboardHome}/>
-                    <Route path="/dashboard/page" component={DashboardPage}/>
-                </Switch>
-            </Router>
+                <Routes>
+                    <Route path="/dashboard/home" element={<DashboardHome/>}/>
+                    <Route path="/dashboard/page" element={<DashboardPage/>}/>
+                </Routes>
+          </Router>
             {/* <Home/> */}
             {/* <Counter count={mystate.global} header="Global Counter" increment={incrementGlobalCounter} decrement={decrementGlobalCounter}></Counter>
             <Counter count={mystate.local} header="Local Counter" increment={incrementLocalCounter} decrement={decrementLocalCounter}></Counter> */}
