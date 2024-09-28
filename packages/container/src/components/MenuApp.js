@@ -30,7 +30,7 @@
 
 import {mount} from 'menu/MenuApp';
 import React,{useRef,useEffect} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 export default({onSelectMenu})=>{
     console.log("hello menu")
     const ref=useRef(null);

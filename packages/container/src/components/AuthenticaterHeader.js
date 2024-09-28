@@ -1,11 +1,10 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  Button,Grid2 as Grid,Toolbar,AppBar,
+  Typography,Link as MaterialLink} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Link as RouterLink } from 'react-router-dom';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 const useStyles = makeStyles((theme) => ({
   '@global': {
     ul: {
@@ -55,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AuthenticaterHeader({ isSignedIn, onSignOut }) {
-  const classes = useStyles();
-
+  // const classes = useStyles();
+  const theme = createTheme();
   const onClick = () => {
     if (isSignedIn && onSignOut) {
       onSignOut();
@@ -65,13 +64,22 @@ export default function AuthenticaterHeader({ isSignedIn, onSignOut }) {
 
   return (
     <React.Fragment>
+      <ThemeProvider theme={theme}>
       <AppBar
         position="static"
         color="default"
         elevation={0}
-        className={classes.appBar}
+        sx={{
+          borderBottom: `1px solid ${theme.palette.divider}`,
+        }}
       >
-        <Toolbar className={classes.toolbar}>
+        <Toolbar 
+          sx={{
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+          }}
+          // className={classes.toolbar}
+          >
           <Typography
             variant="h6"
             color="inherit"
@@ -84,15 +92,19 @@ export default function AuthenticaterHeader({ isSignedIn, onSignOut }) {
           <Button
             color="primary"
             variant="outlined"
-            className={classes.link}
+            // className={classes.link}
             component={RouterLink}
             to={isSignedIn ? '/' : '/authenticator/signin'}
             onClick={onClick}
+            sx={{
+              margin: theme.spacing(1, 1.5),
+            }}
           >
             {isSignedIn ? 'Logout' : 'Login'}
           </Button>
         </Toolbar>
       </AppBar>
+      </ThemeProvider>
     </React.Fragment>
   );
 }

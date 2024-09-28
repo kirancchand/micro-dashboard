@@ -4,10 +4,13 @@ import { createRoot } from 'react-dom/client';
 import { createMemoryHistory,createBrowserHistory } from 'history';
 import App from './App';
 const mount=(el,{onNavigate,defaultHistory,initialPath})=>{
+
+    console.log("initialPath",initialPath)
+
     const history = defaultHistory || createMemoryHistory({
         initialEntries:[initialPath]
     });
-
+    console.log("history",history)
     if(onNavigate){
         history.listen(onNavigate);
     }
@@ -37,3 +40,4 @@ if(process.env.NODE_ENV==='development'){
 }
 
 export {mount};
+

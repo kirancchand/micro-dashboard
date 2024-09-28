@@ -1,7 +1,6 @@
 import React from "react";
-import { makeStyles,createStyles } from "@material-ui/core/styles";
-import LinearProgress from "@material-ui/core/LinearProgress";
-
+import { LinearProgress,createTheme, ThemeProvider } from '@mui/material';
+import { makeStyles,createStyles } from '@mui/styles';
 const useStyles=makeStyles((theme)=>{
     return createStyles({
         bar:{
@@ -13,10 +12,17 @@ const useStyles=makeStyles((theme)=>{
 });
 
 export default()=>{
-    const classes = useStyles();
+    // const classes = useStyles();
+    const theme = createTheme();
     return (
-        <div className={classes.bar}>
+        <ThemeProvider theme={theme}>
+        <div sx={{
+            width:'100','& > * + *':{
+                marginTop:theme.spacing(2)
+            } 
+        }}>
             <LinearProgress/>
         </div>
+        </ThemeProvider>
     );
 };
