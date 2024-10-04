@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import store from '../re-redux/store';
 import { GlobalStore } from 'redux-micro-frontend';
 import MenuList from "./components/MenuList";
-export default({onSelectMenu})=>{
+export default({onSelectMenu,history,isStandAlone})=>{
   // const dispatch = useDispatch();
   const globalStore = GlobalStore.Get(false);
   // globalStore.RegisterStore('MenuStore', store);
@@ -25,8 +25,9 @@ export default({onSelectMenu})=>{
       <li onClick={() => onSelectMenuFunc('/dashboard/home')}>Profile</li>
       <li onClick={() => onSelectMenuFunc('/dashboard/page')}>Settings</li>
       <li onClick={() => onSelectMenuFunc('/auth/signin')}>Auth signin</li>
-      <MenuList/>
+      {/**/}
     </ul>
+    <MenuList/> 
     </Provider>
  </div>)
  }

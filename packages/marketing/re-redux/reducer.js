@@ -1,22 +1,16 @@
 const initialState = {
-    counter: 0
-  };
-  
-  const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case 'INCREMENT':
-        return {
-          ...state,
-          counter: state.counter + 1
-        };
-      case 'DECREMENT':
-        return {
-          ...state,
-          counter: state.counter - 1
-        };
+  // initial state
+};
+import produce from 'immer';
+const reducer = (state = initialState, action) =>  
+produce(state,draft  => {
+  switch(action.type){
+      case 'SELECTEDMENU':
+          draft.currentMenu=action.payload
+          console.log(action)
+          break;
       default:
-        return state;
-    }
-  };
-  
-  export default reducer;
+          return state;
+  }
+});
+export default reducer;

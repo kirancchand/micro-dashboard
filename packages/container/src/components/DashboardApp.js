@@ -33,12 +33,8 @@ export default()=>{
             }
         });
 
-        const unlisten = onParentNavigate;
-        return () => {
-          if (typeof unlisten === 'function') {
-            unlisten();
-          }
-        };
+        const unlisten = () => onParentNavigate(location);
+        return () => unlisten();
     }, [location, navigate]);
     return <div ref={ref} />;
 }

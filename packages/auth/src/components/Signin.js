@@ -72,6 +72,9 @@ export default function SignIn({ onSignIn }) {
     console.log(globalStore.GetGlobalState().MenuStore)
 
   }
+  // const handleClick=()=>{
+  //   globalStore.DispatchAction("MenuStore",SelectMenuFunc('/auth/signup'));
+  // }
   return (
     <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
@@ -141,6 +144,7 @@ export default function SignIn({ onSignIn }) {
           </Button>
           <Grid container>
             <Grid item="true">
+              {/* <span onClick={()=>handleClick("/auth/signup")}>{"Don't have an account? Sign Up"}</span> */}
               <Link to="/auth/signup">{"Don't have an account? Sign Up"}</Link>
             </Grid>
           </Grid>

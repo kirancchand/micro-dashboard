@@ -18,12 +18,9 @@ export default()=>{
             }
         });
 
-        const unlisten = onParentNavigate;
-        return () => {
-          if (typeof unlisten === 'function') {
-            unlisten();
-          }
-        };
+        // You can use a navigation listener with `useNavigate` and location changes
+        const unlisten = () => onParentNavigate(location);
+        return () => unlisten(); 
     }, [location, navigate]);
     return <div ref={ref} />;
 }

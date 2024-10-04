@@ -94,7 +94,7 @@ export default function AuthenticaterHeader({ isSignedIn, onSignOut }) {
             variant="outlined"
             // className={classes.link}
             component={RouterLink}
-            to={isSignedIn ? '/' : '/authenticator/signin'}
+            to={isSignedIn ? '/' : '/auth/signin'}
             onClick={onClick}
             sx={{
               margin: theme.spacing(1, 1.5),

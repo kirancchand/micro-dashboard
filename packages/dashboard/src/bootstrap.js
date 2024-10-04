@@ -29,25 +29,36 @@ import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createMemoryHistory,createBrowserHistory } from 'history';
 import App from './App';
+import { Provider } from "react-redux";
+import store from "../re-redux/store";
 const mount=(el,{onNavigate,defaultHistory,initialPath})=>{
     const history = defaultHistory || createMemoryHistory({
         initialEntries:[initialPath]
     });
 
-    if(onNavigate){
-        history.listen(onNavigate);
-    }
-    const root = createRoot(el); 
-    root.render(<App history={history} />);
+    if (onNavigate) {
+        history.listen(({ location }) => {
+          onNavigate(location);
+        });
+      }
+      if (!el._root) {
+        el._root = createRoot(el);
+      }
+    
+      el._root.render(
+        <Provider store={store}>
+          <App history={history} isStandAlone={!initialPath} />
+        </Provider>
+      );
     // ReactDOM.render(<App history={history} />,el);
 
     return {
-        onParentNavigate({pathname:nextPathname}){
-            const {pathname}=history.location;
-            if(pathname!==nextPathname){
-                history.push(nextPathname);
+        onParentNavigate({ pathname: nextPathname }) {
+            const { pathname: currentPathname } = history.location;
+            if (currentPathname !== nextPathname) {
+              history.push(nextPathname);
             }
-        }
+          }
     }
 };
 

@@ -118,7 +118,7 @@ export default function Header() {
             // className={classes.link}
             // component={RouterLink}
             // to={authData!==null&&authData.isSignedIn ? '/' : '/auth/signin'}
-            onClick={()=>onClick(authData!==null&&authData.isSignedIn ? '/' : '/auth')}
+            onClick={()=>onClick(authData!==null&&authData.isSignedIn ? '/' : '/auth/signin')}
             // onClick={onClick}
           >
             {authData!==undefined&&authData!==null&&authData.isSignedIn ? 'Logout' : 'Login'}

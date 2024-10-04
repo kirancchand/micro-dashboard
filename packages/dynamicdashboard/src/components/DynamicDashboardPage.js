@@ -2,7 +2,7 @@ import React from 'react'
 
 const DynamicDashboardPage = () => {
   return (
-    <div>DynamicDashboardPage</div>
+    <div style={{marginLeft:"500px"}}>DynamicDashboardPage</div>
   )
 }
 

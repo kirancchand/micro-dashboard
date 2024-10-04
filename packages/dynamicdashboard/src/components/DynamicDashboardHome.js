@@ -2,7 +2,7 @@ import React from 'react'
 
 const DynamicDashboardHome = () => {
   return (
-    <div>DynamicDashboardHome</div>
+    <div style={{marginLeft:"500px"}}>DynamicDashboardHome</div>
   )
 }
 

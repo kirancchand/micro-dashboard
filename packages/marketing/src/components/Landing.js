@@ -6,6 +6,9 @@ import { makeStyles } from '@mui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import { useSelector,useDispatch } from 'react-redux';
+import { GlobalStore } from 'redux-micro-frontend';
+import { SelectMenuFunc } from '../../re-redux/actions';
 // import LandingHome from './LandingHome';
 function Copyright() {
   return (
@@ -66,10 +69,37 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { createBrowserHistory } from "history";
+const history = createBrowserHistory();
 
 export default function Landing() {
+  const dispatch=useDispatch()
+  const globalStore = GlobalStore.Get(false);
   // const classes = useStyles();
-  console.log("Landing")
+  // console.log("globalStore",globalStore)
+  // const navigate=useNavigate()
+  const handleClick=(navlink)=>{
+    globalStore.DispatchAction("MenuStore",SelectMenuFunc(navlink));
+    // history.push(navlink)
+  }
+
+
+  const handleHrefClick = (event) => {
+    // Prevent default behavior if necessary
+    event.preventDefault();
+
+    // Check if the app is running in integrated mode
+    if (window.__POWERED_BY_QIANKUN__) {
+      console/log("hyy")
+      // Use custom navigation logic for remote apps
+      window.history.pushState(null, '', to);
+      // Trigger any necessary state updates or events here
+    } else {
+      // Use Link for normal routing
+      // navigate("/pricing");
+    }
+  }
+
   return (
     <React.Fragment>
       <main>
@@ -110,7 +140,7 @@ export default function Landing() {
               <Grid container spacing={2} justifyContent="center">
                 <Grid item="true">
                   <Link to="/pricing">
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" >
                       Pricing
                     </Button>
                   </Link>
@@ -121,6 +151,12 @@ export default function Landing() {
                       Pricing
                     </Button>
                   </Link>
+                  <Button variant="outlined" color="primary" onClick={()=>handleClick("/pricing")}>
+                      Pricing on to link
+                  </Button>
+                  <span onClick={handleHrefClick}>
+                     Pricing a href
+                  </span>
                 </Grid>
               </Grid>
             </HeroButtons>
